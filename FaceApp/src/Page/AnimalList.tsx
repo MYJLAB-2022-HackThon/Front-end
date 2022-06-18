@@ -94,6 +94,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   listText: {
-    fontSize: 30,
+    fontSize: 15,
   },
 });
