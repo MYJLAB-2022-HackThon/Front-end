@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  View,
+  StyleSheet,
+} from "react-native";
 
 type AnimalList = {
   id: string;
@@ -37,6 +43,16 @@ export const AnimalList = () => {
     getAnimalList();
   }, []);
 
+  const fixPercentage = (x: number) => {
+    const i = Math.round(x * 100);
+
+    return (
+      <View style={{ width: `${i}%`, backgroundColor: "pink" }}>
+        <Text style={styles.listText}>{i}%</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={{ flex: 1, padding: 24 }}>
       {isLoading ? (
@@ -46,8 +62,14 @@ export const AnimalList = () => {
           data={demoList}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <View>
-              <Text>{item.animal}</Text>
+            <View style={styles.list}>
+              <View style={{ width: "20%" }}>
+                <Text style={styles.listText}>{item.animal}</Text>
+              </View>
+              <View style={{ width: "60%", backgroundColor: "beige" }}>
+                {fixPercentage(item.probability)}
+              </View>
+              <View style={{ width: "20%" }}></View>
             </View>
           )}
         />
@@ -55,3 +77,20 @@ export const AnimalList = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+  },
+  list: {
+    flex: 1,
+    flexDirection: "row",
+    width: "100%",
+  },
+  listText: {
+    fontSize: 30,
+  },
+});
