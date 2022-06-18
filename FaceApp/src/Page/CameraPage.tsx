@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 
-export const App = () => {
+export const CameraPage = () => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [type, setType] = useState(CameraType.back);
 
@@ -21,20 +21,31 @@ export const App = () => {
   }
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setType(
-                type === CameraType.back ? CameraType.front : CameraType.back
-              );
-            }}
-          >
-            <Text style={styles.text}> Flip </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      <Camera style={styles.camera} type={type} />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            // カメラ切り替え
+            setType(
+              type === CameraType.back ? CameraType.front : CameraType.back
+            );
+          }}
+        >
+          <Text style={styles.text}> Flip </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            // カメラ切り替え
+            setType(
+              type === CameraType.back ? CameraType.front : CameraType.back
+            );
+          }}
+        >
+          <Text style={styles.text}> 撮影 </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -42,17 +53,20 @@ export const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
   },
   camera: {
-    flex: 1,
+    flex: 5,
   },
   buttonContainer: {
     flex: 1,
+    flexDirection: "row",
   },
   button: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
   },
   text: {
-    flex: 1,
+    textAlign: "center",
   },
 });
