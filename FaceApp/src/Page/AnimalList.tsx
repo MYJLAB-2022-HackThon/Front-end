@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import { DecideAnimalButton } from "../Component/DecideAnimalButton";
 
 type AnimalList = {
   id: string;
@@ -69,7 +70,9 @@ export const AnimalList = () => {
               <View style={{ width: "60%", backgroundColor: "beige" }}>
                 {fixPercentage(item.probability)}
               </View>
-              <View style={{ width: "20%" }}></View>
+              <View style={{ width: "20%" }}>
+                <DecideAnimalButton id={item.id} />
+              </View>
             </View>
           )}
         />
