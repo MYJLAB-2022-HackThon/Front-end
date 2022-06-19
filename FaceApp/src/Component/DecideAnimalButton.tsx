@@ -1,9 +1,10 @@
 import { Button, View } from "react-native";
 
-export const DecideAnimalButton = (props: { id: string }) => {
+export const DecideAnimalButton = (props: { id: string; navigation: any }) => {
   const onDecideAnimal = () => {
     // post
     console.log(props.id);
+    props.navigation.navigate("Output");
   };
 
   return (

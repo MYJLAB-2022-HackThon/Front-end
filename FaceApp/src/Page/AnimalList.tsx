@@ -24,7 +24,7 @@ const demoList: AnimalList[] = [
   { id: "5", animal: "golira", probability: 0.23 },
 ];
 
-export const AnimalList = () => {
+export const AnimalList = ({ navigation }: any) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -71,7 +71,7 @@ export const AnimalList = () => {
                 {fixPercentage(item.probability)}
               </View>
               <View style={{ width: "20%" }}>
-                <DecideAnimalButton id={item.id} />
+                <DecideAnimalButton id={item.id} navigation={navigation} />
               </View>
             </View>
           )}
