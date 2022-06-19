@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera, CameraType } from "expo-camera";
-import { useAnimalList } from "Store/animalListState";
+import { useAnimalList } from "../Store/animalListState";
 
 export const CameraPage = ({ navigation }: any) => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
@@ -40,7 +40,7 @@ export const CameraPage = ({ navigation }: any) => {
 
       console.log(formData);
 
-      fetch("http://133.2.101.153:55580/classify", {
+      await fetch("http://133.2.101.153:55580/classify", {
         method: "POST",
         // headers: { "Content-Type": "multipart/form-data" },
         body: formData,

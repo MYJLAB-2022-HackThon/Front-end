@@ -7,7 +7,7 @@ import { Home } from "./Page/Home";
 import { CameraPage } from "./Page/CameraPage";
 import { AnimalList } from "./Page/AnimalList";
 import { Output } from "./Page/Output";
-import { AnimalListProvider } from "Store/animalListState";
+import { AnimalListProvider } from "./Store/animalListState";
 
 /* type RootStackParamList = {
   Home: undefined;

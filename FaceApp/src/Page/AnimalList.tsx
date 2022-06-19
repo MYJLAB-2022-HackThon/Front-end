@@ -7,6 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { DecideAnimalButton } from "../Component/DecideAnimalButton";
+import { useAnimalList } from "../Store/animalListState";
 
 type AnimalList = {
   id: string;
@@ -14,7 +15,7 @@ type AnimalList = {
   probability: number;
 };
 
-const demoList: AnimalList[] = [
+/*const demoList: AnimalList[] = [
   {
     id: "1",
     animal: "cat",
@@ -22,31 +23,40 @@ const demoList: AnimalList[] = [
   },
   { id: "4", animal: "dog", probability: 0.58 },
   { id: "5", animal: "golira", probability: 0.23 },
-];
+];*/
 
 export const AnimalList = ({ navigation }: any) => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const { animalList } = useAnimalList();
+  console.log(animalList);
 
-  const getAnimalList = async () => {
-    try {
-      const response = await fetch("");
-      const json = await response.json();
-      setData(json.animalList);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const listOutput = Object.keys(animalList).map((key, probability) => {
+    console.log(animalList[key]);
 
-  useEffect(() => {
-    getAnimalList();
-  }, []);
+    const i = Math.round(animalList[key] * 100);
 
+    return (
+      <View style={styles.list} key={key}>
+        <View style={{ width: "20%" }}>
+          <Text style={styles.listText}>{key}</Text>
+        </View>
+        <View style={styles.bar}>
+          <View
+            style={{ width: `${i}%`, backgroundColor: "pink", flex: 1 }}
+          ></View>
+          <View style={{ width: `${100 - i}%`, justifyContent: "center" }}>
+            <Text style={styles.listText}>{i}%</Text>
+          </View>
+        </View>
+        <View style={{ width: "20%" }}>
+          <DecideAnimalButton name={key} navigation={navigation} />
+        </View>
+      </View>
+    );
+  });
+
+  /*
   const fixPercentage = (x: number) => {
     const i = Math.round(x * 100);
-
     return (
       <View style={{ width: `${i}%`, backgroundColor: "pink" }}>
         <Text style={styles.listText}>{i}%</Text>
@@ -56,29 +66,27 @@ export const AnimalList = ({ navigation }: any) => {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList
-          data={demoList}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.list}>
-              <View style={{ width: "20%" }}>
-                <Text style={styles.listText}>{item.animal}</Text>
-              </View>
-              <View style={{ width: "60%", backgroundColor: "beige" }}>
-                {fixPercentage(item.probability)}
-              </View>
-              <View style={{ width: "20%" }}>
-                <DecideAnimalButton id={item.id} navigation={navigation} />
-              </View>
+      <FlatList
+        data={demoList}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.list}>
+            <View style={{ width: "20%" }}>
+              <Text style={styles.listText}>{item.animal}</Text>
             </View>
-          )}
-        />
-      )}
+            <View style={{ width: "60%", backgroundColor: "beige" }}>
+              {fixPercentage(item.probability)}
+            </View>
+            <View style={{ width: "20%" }}>
+              <DecideAnimalButton id={item.id} navigation={navigation} />
+            </View>
+          </View>
+        )}
+      />
     </View>
-  );
+  );*/
+
+  return <View style={{ flex: 1, padding: 24 }}>{listOutput}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -89,11 +97,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   list: {
-    flex: 1,
     flexDirection: "row",
     width: "100%",
   },
   listText: {
-    fontSize: 15,
+    fontSize: 18,
+  },
+  bar: {
+    flexDirection: "row",
+    width: "60%",
+    backgroundColor: "beige",
+    justifyContent: "center",
   },
 });
