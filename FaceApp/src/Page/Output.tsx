@@ -21,7 +21,7 @@ export const Output = ({ navigation }: any) => {
       <Image source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} />
       <Button
         title="診断を終了する"
-        onPress={() => navigation.navigate("home")}
+        onPress={() => navigation.navigate("Home")}
       />
     </View>
   );
