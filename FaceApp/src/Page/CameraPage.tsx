@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 
-export const CameraPage = () => {
+export const CameraPage = ({ navigation }: any) => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
@@ -25,6 +25,9 @@ export const CameraPage = () => {
     if (camera) {
       const image = await camera.takePictureAsync();
       console.log(image);
+      // APIに送信
+
+      navigation.navigate("AnimalList");
     }
   };
 
