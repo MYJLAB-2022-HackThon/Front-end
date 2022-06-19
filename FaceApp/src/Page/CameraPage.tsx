@@ -26,8 +26,24 @@ export const CameraPage = ({ navigation }: any) => {
       const image = await camera.takePictureAsync();
       console.log(image);
       // APIに送信
+      const formData = new FormData();
+      // formData.append("file", image.uri);
+      formData.append("file", new File([], "./sampleImage/test_dress.png"));
 
-      navigation.navigate("AnimalList");
+      fetch("http://133.2.101.153:55580/classify", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          let res = JSON.stringify(responseJson);
+          console.log("Response: " + res);
+          return responseJson;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      // navigation.navigate("AnimalList");
     }
   };
 
