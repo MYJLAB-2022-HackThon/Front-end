@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { useAnimalList } from "../Store/animalListState";
+import { useCookie } from "../Store/cookieState";
 
 export const CameraPage = ({ navigation }: any) => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
+  const { cookie, setCookie } = useCookie();
   const { animalList, setAnimalList } = useAnimalList();
 
   useEffect(() => {
@@ -26,6 +34,7 @@ export const CameraPage = ({ navigation }: any) => {
   const takePicture = async () => {
     if (camera) {
       const image = await camera.takePictureAsync();
+      // const image = { uri: "./sampleImage/test_dress.png" };
       console.log(image);
       // APIに送信
       const formData = new FormData();
@@ -40,17 +49,24 @@ export const CameraPage = ({ navigation }: any) => {
 
       console.log(formData);
 
-      await fetch("http://133.2.101.153:55580/classify", {
+      const testUri = "http://0.0.0.0/classify";
+      const uri = "http://133.2.101.153:55580/classify";
+
+      await fetch(uri, {
         method: "POST",
-        // headers: { "Content-Type": "multipart/form-data" },
         body: formData,
       })
-        .then((response) => response.json())
+        .then((response) => {
+          // console.log(response.headers);
+          const headerCookie = response.headers.get("set-cookie");
+          if (headerCookie) {
+            setCookie(headerCookie);
+          }
+          return response.json();
+        })
         .then((responseJson) => {
-          let res = JSON.stringify(responseJson);
           setAnimalList(responseJson.animalList);
-          console.log("Response: " + res);
-          return responseJson;
+          console.log(responseJson);
         })
         .catch((error) => {
           console.error(error);
@@ -58,7 +74,7 @@ export const CameraPage = ({ navigation }: any) => {
       navigation.navigate("AnimalList");
     }
   };
-
+  console.log(cookie);
   return (
     <View style={styles.container}>
       <Camera

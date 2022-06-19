@@ -1,27 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import { useSelectedAnimal } from "../Store/selectAnimalState";
+import { useCookie } from "../Store/cookieState";
 
 // const imageUrl = "https://i.imgur.com/fHyEMsl.jpg";
 
 export const Output = () => {
   const [img, setImg] = useState<string>("");
+  const { cookie } = useCookie();
   const { selectedAnimal } = useSelectedAnimal();
 
   console.log(selectedAnimal);
 
   const fetchImage = async () => {
-    await fetch(`http://localhost:80/funny_img/${selectedAnimal}`, {
+    const testUri = "http://0.0.0.0:80/funny_img/";
+    const uri = "http://133.2.101.153:55580/funny_img/";
+
+    await fetch(uri + selectedAnimal, {
       headers: {
         accept: "application/json",
-        Cookie: "file_name=test.png; pass=3wkOFq0S&eX7",
+        Cookie: cookie,
       },
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        let res = JSON.stringify(responseJson);
-        console.log("Response: " + res);
-        return res;
+      .then((response) => {
+        console.log(response);
+        return response.blob();
+      })
+      .then((imageBlob) => {
+        console.log(imageBlob);
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        console.log(imageObjectURL);
+        setImg(imageObjectURL);
       })
       .catch((error) => {
         console.error(error);
@@ -37,7 +46,11 @@ export const Output = () => {
 
   return (
     <View>
-      <Image source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} />
+      {img ? (
+        <Image source={{ uri: img }} style={{ width: 112, height: 112 }} />
+      ) : (
+        <Text>生成中</Text>
+      )}
     </View>
   );
 };
