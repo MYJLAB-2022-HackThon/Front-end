@@ -8,6 +8,7 @@ import { CameraPage } from "./Page/CameraPage";
 import { AnimalList } from "./Page/AnimalList";
 import { Output } from "./Page/Output";
 import { AnimalListProvider } from "./Store/animalListState";
+import { SelectedAnimalProvider } from "./Store/selectAnimalState";
 
 /* type RootStackParamList = {
   Home: undefined;
@@ -19,15 +20,17 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <AnimalListProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="CameraPage" component={CameraPage} />
-          <Stack.Screen name="AnimalList" component={AnimalList} />
-          <Stack.Screen name="Output" component={Output} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AnimalListProvider>
+    <SelectedAnimalProvider>
+      <AnimalListProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="CameraPage" component={CameraPage} />
+            <Stack.Screen name="AnimalList" component={AnimalList} />
+            <Stack.Screen name="Output" component={Output} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AnimalListProvider>
+    </SelectedAnimalProvider>
   );
 }
