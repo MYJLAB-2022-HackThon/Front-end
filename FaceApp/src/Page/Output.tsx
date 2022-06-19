@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Image } from "react-native";
+import { View, Image, Button } from "react-native";
 // const imageUrl = "https://i.imgur.com/fHyEMsl.jpg";
 
-export const Output = () => {
+export const Output = ({ navigation }: any) => {
   const [img, setImg] = useState<string>("");
   /*
   const fetchImage = async () => {
@@ -19,6 +19,10 @@ export const Output = () => {
   return (
     <View>
       <Image source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }} />
+      <Button
+        title="診断を終了する"
+        onPress={() => navigation.navigate("home")}
+      />
     </View>
   );
 };
