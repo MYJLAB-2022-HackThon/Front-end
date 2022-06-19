@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Camera, CameraType } from "expo-camera";
+import { useAnimalList } from "Store/animalListState";
 
 export const CameraPage = ({ navigation }: any) => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
+  const { animalList, setAnimalList } = useAnimalList();
 
   useEffect(() => {
     (async () => {
@@ -46,13 +48,14 @@ export const CameraPage = ({ navigation }: any) => {
         .then((response) => response.json())
         .then((responseJson) => {
           let res = JSON.stringify(responseJson);
+          setAnimalList(responseJson.animalList);
           console.log("Response: " + res);
           return responseJson;
         })
         .catch((error) => {
           console.error(error);
         });
-      // navigation.navigate("AnimalList");
+      navigation.navigate("AnimalList");
     }
   };
 
