@@ -46,13 +46,13 @@ export const CameraPage = ({ navigation }: any) => {
         .then((response) => response.json())
         .then((responseJson) => {
           let res = JSON.stringify(responseJson);
-          console.log("Response: " + res);
-          return responseJson;
+          console.log(responseJson.animalList);
+          return responseJson.animalList;
         })
         .catch((error) => {
           console.error(error);
         });
-      // navigation.navigate("AnimalList");
+      navigation.navigate("AnimalList");
     }
   };
 
