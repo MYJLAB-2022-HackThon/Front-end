@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "./Page/Home";
 import { CameraPage } from "./Page/CameraPage";
 import { AnimalList } from "./Page/AnimalList";
+import { Output } from "./Page/Output";
 
 /* type RootStackParamList = {
   Home: undefined;
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="CameraPage" component={CameraPage} />
         <Stack.Screen name="AnimalList" component={AnimalList} />
+        <Stack.Screen name="Output" component={Output} />
       </Stack.Navigator>
     </NavigationContainer>
   );
