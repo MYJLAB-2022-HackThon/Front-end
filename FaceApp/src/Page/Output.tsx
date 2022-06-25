@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { View, Image, Text, Button } from "react-native";
+import { View, Image, Text, Button, StyleSheet } from "react-native";
 import { useSelectedAnimal } from "../Store/selectAnimalState";
 import { useCookie } from "../Store/cookieState";
 
@@ -46,12 +46,15 @@ export const Output = ({ navigation }: any) => {
   }, []);
 
   return (
-    <View>
-      {img ? (
-        <Image source={{ uri: img }} style={{ width: 112, height: 112 }} />
-      ) : (
-        <Text>生成中</Text>
-      )}
+    <View style={styles.container}>
+      <View style={styles.item}>
+        {img ? (
+          <Image source={{ uri: img }} style={{ width: 112, height: 112 }} />
+        ) : (
+          <Text>生成中</Text>
+        )}
+      </View>
+
       <Button
         title="診断を終了する"
         onPress={() => navigation.navigate("Home")}
@@ -59,3 +62,18 @@ export const Output = ({ navigation }: any) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  item: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
