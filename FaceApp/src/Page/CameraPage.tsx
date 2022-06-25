@@ -14,6 +14,7 @@ export const CameraPage = ({ navigation }: any) => {
   const [hasPermission, setHasPermission] = useState<null | boolean>(null);
   const [type, setType] = useState(CameraType.back);
   const [camera, setCamera] = useState<Camera | null>(null);
+  const [canShot, setCanShot] = useState<boolean>(false);
   const { cookie, setCookie } = useCookie();
   const { animalList, setAnimalList } = useAnimalList();
 
@@ -32,6 +33,8 @@ export const CameraPage = ({ navigation }: any) => {
   }
 
   const takePicture = async () => {
+    setCanShot(true);
+
     if (camera) {
       const image = await camera.takePictureAsync();
       // const image = { uri: "./sampleImage/test_dress.png" };
@@ -95,7 +98,11 @@ export const CameraPage = ({ navigation }: any) => {
         >
           <Text style={styles.text}> Flip </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={takePicture}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={takePicture}
+          disabled={canShot}
+        >
           <Text style={styles.text}> 撮影 </Text>
         </TouchableOpacity>
       </View>
