@@ -1,4 +1,4 @@
-import { Button, View } from "react-native";
+import { Button, View, StyleSheet } from "react-native";
 import { useSelectedAnimal } from "../Store/selectAnimalState";
 
 export const DecideAnimalButton = (props: {
@@ -15,7 +15,11 @@ export const DecideAnimalButton = (props: {
 
   return (
     <View>
-      <Button title={`${props.name}にする`} onPress={onDecideAnimal} />
+      <Button title={`${props.name}`} onPress={onDecideAnimal} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {},
+});
